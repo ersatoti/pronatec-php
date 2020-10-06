@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Programa&ccedil;&atilde;o para Web - HTML + CSS + Javascript</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+</div>
+
+<body>
+    <div class="svg-container">
+        <svg viewbox="0 0 800 300" class="svg">
+            <path id="curve" d="M 800 100 Q 400 350 0 100 L 0 0 L 800 0 L 800 100 Z">
+            </path>
+         </svg>
+    </div>
+    <header>
+        <h1>Programa&ccedil;&atilde;o para Web</h1>
+        <h3>Utilizando HTML, CSS e JavaScript</h3>
+    </header>
+
+    </div>
+    <form action="processa.php" enctype="multipart/form-data" id="formCadastro" method="POST">
+        <p>
+            <input type="file" accept="image/*" name="arquivo" id="file" onchange="loadFile(event)" style="display: none;">
+        </p>
+        <fieldset>
+            <fieldset class="grupo">
+                <div class="campo">
+                    <button type="button" class="buttonImg">
+                  <label for="file" style="cursor: pointer;">Adicionar imagem</label>
+                  </button>
+                    <p><img id="imgAdicionada" width="200" /></p>
+                </div>
+                <div class="campo">
+                    <label for="nome">Nome</label>
+                    <input type="text" id="nome" name="nome" style="width: 10em" value="">
+                </div>
+                <div class="campo">
+                    <label for="nome">Sobrenome</label>
+                    <input type="text" id="sobrenome" name="sobrenome" style="width: 10em" value="">
+                </div>
+                <div class="campo">
+                    <label>Sexo</label>
+                    <label>
+                  <input type="radio" id="masculino" name="sexo" value="masculino"> Masculino
+                  </label>
+                    <label>
+                  <input type="radio" id="feminino" name="sexo" value="feminino"> Feminino
+                  </label>
+                </div>
+                <div class="campo">
+                    <label for="email">E-mail</label>
+                    <input type="text" id="email" name="email" style="width: 15em" value="">
+                </div>
+                <div class="campo">
+                    <label for="telefone">Telefone</label>
+                    <input type="text" id="telefone" name="telefone" style="width: 15em" value="">
+                </div>
+
+            </fieldset>
+            <br>
+            <input type="button" class="button" id="adicionar" value="Adicionar">
+        </fieldset>
+    </form>
+    <div class="row" id="cardsAdicionados">
+</body>
+
+</html>
+<!-- JavaScript -->
+<script type="text/javascript">
+    document.getElementById("adicionar").onclick = function() {
+        //obter valores de input
+        var nome = document.getElementById("nome").value;
+
+        if (nome == '' || nome == null) {
+            alert("Campo Nome não foi preenchido!");
+            return;
+        }
+
+        var sobrenome = document.getElementById("sobrenome").value;
+        var sexo = document.querySelector('input[name="sexo"]:checked').value;
+        var email = document.getElementById("email").value;
+        var telefone = document.getElementById("telefone").value;
+        var img = document.getElementById("imgAdicionada");
+
+        //criar a div externa com css column
+        var novaDivcolumn = document.createElement('div');
+        novaDivcolumn.className = "column";
+
+        //criar a div interna com o css card
+        var novadiv = document.createElement('div');
+        novadiv.className = "card";
+
+        //gerando innerHTML com as informacoes
+        var innerHtml = "<p class='titleCard'>Nome: " + nome + "</p>" +
+            "<p> Sobrnome: " + sobrenome + "</p>" +
+            "<p> Sexo: " + sexo + "</p>" +
+            "<p> E-mail: " + email + "</p>" +
+            "<p> Telefone: " + telefone + "</p>";
+
+        novadiv.innerHTML = innerHtml;
+
+        var cloneImage = img.cloneNode(true);
+        novadiv.appendChild(cloneImage);
+
+        //injeta a div interna dentro da div externa
+        novaDivcolumn.appendChild(novadiv);
+
+        //injeta a div externa dentro da div cardsAdicionados
+        document.getElementById("cardsAdicionados").appendChild(novaDivcolumn);
+
+        document.getElementById("formCadastro").submit();
+
+        document.getElementById("nome").value = null;
+        document.getElementById("masculino").checked = false;
+        document.getElementById("feminino").checked = false;
+        document.getElementById("email").value = null;
+        document.getElementById('imgAdicionada').removeAttribute('src');
+
+    }
+
+    window.addEventListener('load', function() {
+        document.querySelector('input[type="file"]').addEventListener('change', function() {
+            if (this.files && this.files[0]) {
+                var img = document.querySelector('img');
+                img.src = URL.createObjectURL(this.files[0]);
+            }
+        });
+    });
+
+    var loadFile = function(event) {
+        var image = document.getElementById('output');
+    };
+</script>
